@@ -1,0 +1,53 @@
+<html>
+
+<head>
+	<!--
+    This is the library that provides websocket streaming pub/sub
+    The dev serverver is serving the html and javascript, but it also provides updating fx data on /fx/prices.
+     -->
+	<script src="stomp.js"></script>
+	<script src="sparkline.js"></script>
+</head>
+
+<body>
+	<section class="content">
+
+		<!-- Custom card contains generated table -->
+		<div class="card">
+			<div class="card-header">
+				<span>Live updating Table of sorted Currency values</span>
+			</div>
+
+			<!-- Table start -->
+			<div class="card-content">
+				<table id="currency-table">
+					<thead id="currency-table-header">
+						<tr class="currency-table-row">
+							<th class="currency-table-cell">Currency</th>
+							<th class="currency-table-cell align-right">Best Bid</th>
+							<th class="currency-table-cell align-right">Best Ask</th>
+							<th class="currency-table-cell align-right">Last Change Bid</th>
+							<th class="currency-table-cell align-right">Last Change Ask</th>
+							<th class="currency-table-cell align-right">Mid Price Trend</th>
+						</tr>
+					</thead>
+					<tbody id="currency-table-body"></tbody>
+				</table>
+			</div>
+			<!-- Table end -->
+
+			<div class="card-footer">
+				<span>Aal Zami Quamar Hayat</span>
+				<span class="text-right">aalzamiquamar@gmail.com</span>
+			</div>
+		</div>
+
+	</section>
+
+	<!-- Code you write in index.js and anything it depends on will be bundled into bundle.js and
+     is included here -->
+	<script src="bundle.js"></script>
+
+</body>
+
+</html>
