@@ -18,21 +18,23 @@ class SortedTable {
 
   // Calculate midPrice and replacing old row with new row and store in array
   calculateMidPrice(res) {
+    const timestamp = Date.parse(new Date());
     const midPrice = (res.bestBid + res.bestAsk) / 2;
     const index = this.indexArray.indexOf(res.name);
+
     if (~index) {
       // If previous entry is present for the received currency
-      // Get the midPrice array and maintain latest 30 values
+      // Get the midPrice array and store value with timestamp
       const midPriceArray = this.dataArray[index].midPrice;
       if (midPriceArray.length >= 30) midPriceArray.shift();
-      midPriceArray.push(midPrice);
+      midPriceArray.push([timestamp, midPrice]);
       res.midPrice = midPriceArray;
 
       // Replace the old curreny value with new value
       this.dataArray[index] = res;
     } else {
       // Push into array and define midPrice if it is the first entry for the currency
-      res.midPrice = [midPrice];
+      res.midPrice = [[timestamp, midPrice]];
       this.indexArray.push(res.name);
       this.dataArray.push(res);
     }
@@ -54,16 +56,21 @@ class SortedTable {
       const tableRowEl = document.createElement('tr');
       tableRowEl.className = 'currency-table-row';
 
+      // create cells for text values
       this.generateCell(tableRowEl, row.name, 'currency-table-cell');
       this.generateCell(tableRowEl, row.bestBid, 'currency-table-cell align-right');
       this.generateCell(tableRowEl, row.bestAsk, 'currency-table-cell align-right');
       this.generateCell(tableRowEl, row.lastChangeBid, 'currency-table-cell align-right');
       this.generateCell(tableRowEl, row.lastChangeAsk, 'currency-table-cell align-right');
 
+      // create cell for sparkline
       const sparkCellEl = document.createElement('td');
       sparkCellEl.className = 'currency-table-cell align-right';
       const sparkElement = document.createElement('span')
-      Sparkline.draw(sparkElement, row.midPrice)
+
+      // get sparkline array and append cell
+      let sparklineData = this.getSparklineData(row.midPrice);
+      Sparkline.draw(sparkElement, sparklineData);
       sparkCellEl.appendChild(sparkElement);
       tableRowEl.appendChild(sparkCellEl);
 
@@ -78,6 +85,12 @@ class SortedTable {
     const text = document.createTextNode(data);
     tableCellEl.appendChild(text);
     parent.appendChild(tableCellEl);
+  }
+
+  // get sparkline data for the last 30 secs
+  getSparklineData(data) {
+    const timeLimit = Date.parse(new Date()) - 30000;
+    return data.filter(aoa => aoa[0] > timeLimit).map(aoi => aoi[1]);
   }
 }
 export default SortedTable;

@@ -18,6 +18,7 @@ describe('Sorted Datatable', () => {
     jest.spyOn(dataTable, 'sortTableData');
     jest.spyOn(dataTable, 'renderTable');
     jest.spyOn(dataTable, 'generateCell');
+    jest.spyOn(dataTable, 'getSparklineData');
 
     // tests for receiveMessage()
     dataTable.receiveMessage(message);
@@ -29,11 +30,12 @@ describe('Sorted Datatable', () => {
     expect(dataTable.sortTableData).toHaveBeenCalled();
     expect(dataTable.renderTable).toHaveBeenCalled();
     expect(dataTable.generateCell).toHaveBeenCalled();
+    expect(dataTable.getSparklineData).toHaveBeenCalledTimes(dataTable.dataArray.length);
 
-    // check data is consistent
+    // ensure data is consistent
     expect(dataTable.indexArray).toContain(sampleData.name);
-    expect(dataTable.indexArray).toHaveLength(dataTable.dataArray.length);
     const length = dataTable.dataArray.length;
+    expect(dataTable.indexArray).toHaveLength(length);
     expect(dataTable.dataArray[length - 1]).toHaveProperty('name');
     expect(dataTable.dataArray[length - 1]).toHaveProperty('midPrice');
     expect(dataTable.dataArray[length - 1].name).toBe(sampleData.name);
