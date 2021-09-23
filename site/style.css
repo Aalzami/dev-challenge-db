@@ -112,6 +112,13 @@ h2 {
   flex-direction: row-reverse;
 }
 
+.notes {
+  margin: 50px 20px;
+}
+.notes p {
+  margin-left: 20px;
+}
+
 /* tr:nth-child(even) {
   background-color: #f0f0f0;
 }

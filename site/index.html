@@ -42,6 +42,18 @@
 			</div>
 		</div>
 
+		<div class="notes">
+			<h4>Notes:</h4>
+			<p>To complete the challenge I have taken the following steps:</p>
+			<p>--> I have made use of two arrays, one to store the data and the other to keep track of indexes of the currencies stored.</p>
+			<p>--> A new key <code>midPrice</code> is added in the response object which stores the calculated mid price of the currency.</p>
+			<p>--> The mid price is stored in an array with a timestamp of when the object was received.</p>
+			<p>--> The mid price array should look like <code>midPrice: [[timestamp, vlaue], [timestamp, vlaue], [timestamp, vlaue]....]</code></p>
+			<p>--> With the help of this timestamp, values that were received before 30 seconds are then filtered.</p>
+			<p>--> Using the indexes of the stored currencies the old value is replaced with the new currency value along with the past mip price values.</p>
+			<p>--> The resultant currency array is then sorted and rendered into a table with sparkline.</p>
+		</div>
+
 	</section>
 
 	<!-- Code you write in index.js and anything it depends on will be bundled into bundle.js and
